@@ -1,0 +1,36 @@
+---
+name: Net-Route
+version: v0.00_01
+author:
+  - 'Thomas Equeter <tequeter@straton-it.fr>'
+abstract: Portable interface to your system's routing table
+license: perl
+resources:
+  license: http://dev.perl.org/licenses/
+requires:
+  Moose: 0
+  NetAddr::IP: 0
+  Readonly: 0
+  version: 0.74
+build_requires:
+  Test::More: 0
+provides:
+  Net::Route:
+    file: lib/Net/Route.pm
+    version: v0.00_01
+  Net::Route::Parser:
+    file: lib/Net/Route/Parser.pm
+    version: 218
+  Net::Route::Parser::linux:
+    file: lib/Net/Route/Parser/linux.pm
+    version: 218
+  Net::Route::Parser::win32:
+    file: lib/Net/Route/Parser/win32.pm
+    version: 218
+  Net::Route::Table:
+    file: lib/Net/Route/Table.pm
+    version: 218
+generated_by: Module::Build version 0.280801
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.2.html
+  version: 1.2

@@ -1,0 +1,17 @@
+Build.PL
+Changes
+MANIFEST
+README
+lib/Net/Route.pm
+lib/Net/Route/Parser/win32.pm
+lib/Net/Route/Parser/linux.pm
+lib/Net/Route/Table.pm
+lib/Net/Route/Parser.pm
+t/00-load.t
+t/02-perlcritic.t
+t/02-pod-coverage.t
+t/02-pod.t
+t/50-integration.t
+t/perlcriticrc
+Makefile.PL
+META.yml
