@@ -3,7 +3,7 @@ package Net::Route::Parser;
 use Moose;
 use English qw( -no_match_vars );
 use POSIX qw( WIFEXITED WEXITSTATUS WIFSIGNALED WTERMSIG WIFSTOPPED WSTOPSIG );
-use version; our ( $VERSION ) = '$Revision: 218 $' =~ m{(\d+)};    ## no critic
+use version; our ( $VERSION ) = '$Revision: 237 $' =~ m{(\d+)};    ## no critic
 
 
 sub from_system
@@ -11,7 +11,7 @@ sub from_system
     my ( $self ) = @_;
 
     my $command = $self->command_line();
-    open my $input_ref , $command or die "Cannot open or execute '$command': $OS_ERROR"; ## no critic
+    open my $input_ref , "$command" or die "Cannot open or execute '$command': $OS_ERROR"; ## no critic
 
     my $routes_ref = $self->parse_routes( $input_ref );
 
@@ -55,7 +55,7 @@ Not used directly.
 
 =head1 VERSION
 
-Revision $Revision: 218 $.
+Revision $Revision: 237 $.
 
 
 =head1 DESCRIPTION

@@ -1,7 +1,7 @@
 package Net::Route;
 
 use Moose;
-use version; our $VERSION = qv('v0.00_01');
+use version; our $VERSION = qv('v0.00_02');
 
 use NetAddr::IP;
 
@@ -20,7 +20,7 @@ __END__
 
 =head1 NAME
 
-Net::Route - Portable interface to your system's routing table
+Net::Route - Portable interface to the routing table
 
 
 =head1 SYNOPSIS
@@ -32,7 +32,7 @@ Net::Route - Portable interface to your system's routing table
 
 =head1 VERSION
 
-Version 0.00_01, $Revision: 220 $
+Version 0.00_02, $Revision: 239 $
 
 
 =head1 DESCRIPTION
@@ -44,7 +44,7 @@ utility is different from BSD's C<route show>, from Windows' C<route print>,
 etc. Parsing all these different output styles in an (otherwise portable)
 script can quickly become inconvenient.
 
-L<Net::Route> abstracts the system specifics and hides them behind a single
+L<Net::Route> abstracts the system specifics and provides a single, portable
 interface.
 
 =head2 The Net::Route Class

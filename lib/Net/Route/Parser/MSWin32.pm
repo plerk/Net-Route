@@ -1,4 +1,4 @@
-package Net::Route::Parser::win32;
+package Net::Route::Parser::MSWin32;
 use version; our ( $VERSION ) = '$Revision: 218 $' =~ m{(\d+)};    ## no critic
 use Moose;
 use Readonly;
@@ -8,14 +8,14 @@ use Net::Route;
 extends 'Net::Route::Parser';
 
 # Very loose matching, it's just meant to filter lines
-Readonly my $IPV4_RE  => qr/ (?: \d+ ){3} \. \d+ /xms;
+Readonly my $IPV4_RE  => qr/ (?: \d+ \.){3} \d+ /xms;
 Readonly my $IPV6_RE  => qr/ (?: \p{IsXDigit}+ : :? )+ \p{IsXDigit}+ /xms;
 Readonly my $IP_RE    => qr/ (?: $IPV4_RE | $IPV6_RE ) /xms;
 Readonly my $ROUTE_RE => qr/^ \s* ($IP_RE) \s+ ($IP_RE) \s+ ($IP_RE) \s+ ($IP_RE) \s+ (\d+) \s* $/xms;
 
 sub command_line
 {
-    return 'route print';
+    return 'route print |';
 }
 
 sub parse_routes
@@ -55,7 +55,7 @@ __END__
 
 =head1 NAME
 
-Net::Route::Parser::win32 - Internal class
+Net::Route::Parser::MSWin32 - Internal class
 
 
 =head1 SYNOPSIS

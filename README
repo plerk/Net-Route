@@ -5,8 +5,8 @@ Every OS provides its custom interface to the routing table: Linux'
 "route print", etc. Parsing all these different output styles in an
 (otherwise portable) script can quickly become inconvenient.
 
-Net::Route abstracts the system specifics and hides them behind a single
-interface.
+Net::Route abstracts the system specifics and provides a single,
+portable interface.
 
 INSTALLATION
 

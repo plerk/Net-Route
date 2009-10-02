@@ -16,6 +16,12 @@ my $builder = Module::Build->new(
         'Readonly'    => 0,
         'version'     => 0.74,
     },
+    build_requires => {
+        'Test::More'          => 0,
+        'Test::Perl::Critic'  => 0,
+        'Test::Pod'           => 0,
+        'Test::Pod::Coverage' => 0,
+    },
     add_to_cleanup     => [ 'Net-Route-*' ],
     create_makefile_pl => 'traditional',
 );

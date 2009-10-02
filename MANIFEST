@@ -3,7 +3,7 @@ Changes
 MANIFEST
 README
 lib/Net/Route.pm
-lib/Net/Route/Parser/win32.pm
+lib/Net/Route/Parser/MSWin32.pm
 lib/Net/Route/Parser/linux.pm
 lib/Net/Route/Table.pm
 lib/Net/Route/Parser.pm

@@ -9,6 +9,9 @@ WriteMakefile
                            'NetAddr::IP' => 0,
                            'Readonly' => 0,
                            'Test::More' => 0,
+                           'Test::Perl::Critic' => 0,
+                           'Test::Pod' => 0,
+                           'Test::Pod::Coverage' => 0,
                            'version' => '0.74'
                          },
           'INSTALLDIRS' => 'site',
