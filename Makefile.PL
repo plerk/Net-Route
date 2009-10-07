@@ -5,6 +5,7 @@ WriteMakefile
           'NAME' => 'Net::Route',
           'VERSION_FROM' => 'lib/Net/Route.pm',
           'PREREQ_PM' => {
+                           'IPC::Run3' => 0,
                            'Moose' => 0,
                            'NetAddr::IP' => 0,
                            'Readonly' => 0,

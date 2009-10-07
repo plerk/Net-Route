@@ -1,5 +1,5 @@
 severity = brutal
-exclude = ValuesAndExpressions::ProhibitEmptyQuotes ValuesAndExpressions::RequireInterpolationOfMetachars CodeLayout::RequireTidyCode Perl::Critic::Policy::ErrorHandling::RequireCarping
+exclude = ValuesAndExpressions::ProhibitEmptyQuotes ValuesAndExpressions::RequireInterpolationOfMetachars ErrorHandling::RequireCarping NamingConventions::Capitalization ValuesAndExpressions::RequireConstantVersion
 
 [Miscellanea::RequireRcsKeywords]
 keywords = Revision
@@ -15,6 +15,12 @@ lib_sections = NAME | SYNOPSIS | VERSION | DESCRIPTION | AUTHOR | LICENSE AND CO
 
 [Documentation::PodSpelling]
 spell_command = aspell --lang=en list
-stop_words = Straton API Accessors filehandles filehandle ie IPs CLI whitelist Whitelist TODO Equeter perldoc CPAN's AnnoCPAN CPAN Storoz arrayref Linux' BSD's
+stop_words = Straton API Accessors filehandles filehandle ie IPs CLI whitelist Whitelist TODO Equeter perldoc CPAN's AnnoCPAN CPAN Storoz arrayref Linux' BSD's SOLARIS GCC perl Solaris
 
 [Variables::ProhibitPackageVars]
+
+[CodeLayout::RequireTidyCode]
+perltidyrc = t/perltidyrc
+
+[TestingAndDebugging::ProhibitNoWarnings]
+allow_with_category_restriction = 1

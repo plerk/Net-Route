@@ -10,7 +10,7 @@ if (!eval { require Test::Perl::Critic } )
 
 Test::Perl::Critic->import(
         -profile => 't/perlcriticrc',
-#        -verbose => 3
+        -verbose => 8,
 );
 
 Test::Perl::Critic::all_critic_ok();

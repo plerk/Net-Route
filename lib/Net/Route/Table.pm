@@ -1,5 +1,7 @@
 package Net::Route::Table;
-use version; our ( $VERSION ) = '$Revision: 218 $' =~ m{(\d+)};    ## no critic
+use strict;
+use warnings;
+use version; our ( $VERSION ) = '$Revision: 254 $' =~ m{(\d+)}xms;
 use Moose;
 use NetAddr::IP;
 use English qw( -no_match_vars );
@@ -22,10 +24,10 @@ sub default_route
 
 sub from_system
 {
-    require "Net/Route/Parser/$OSNAME.pm"; ## no critic (Modules::RequireBareWordIncludes)
+    require "Net/Route/Parser/$OSNAME.pm";    ## no critic (Modules::RequireBareWordIncludes)
 
     my $parser_ref = "Net::Route::Parser::$OSNAME"->new();
-    my @routes = sort _up_routes_by_metric @{ $parser_ref->from_system() };
+    my @routes     = sort _up_routes_by_metric @{ $parser_ref->from_system() };
 
     return Net::Route::Table->new( { 'routes' => \@routes } );
 }
@@ -63,7 +65,7 @@ Net::Route::Table - A routing table, such as your system's.
 
 =head1 VERSION 
 
-Revision $Revision: 218 $.
+Revision $Revision: 254 $.
 
 =head1 DESCRIPTION 
 

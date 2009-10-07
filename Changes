@@ -1,5 +1,8 @@
 Revision history for Net-Route
 
+0.00_03 2009-10-07
+        This alpha release adds support for solaris and more thorough tests.
+
 0.00_02 2009-10-02
         This alpha release adds support for MSWin32.
 

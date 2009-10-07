@@ -5,7 +5,7 @@ use Module::Build;
 my $builder = Module::Build->new(
     module_name         => 'Net::Route',
     license             => 'perl',
-    dist_author         => 'Thomas Equeter <tequeter@straton-it.fr>',
+    dist_author         => 'Straton IT <tequeter@straton-it.fr>',
     dist_version_from   => 'lib/Net/Route.pm',
     build_requires      => {
         'Test::More' => 0,
@@ -14,6 +14,7 @@ my $builder = Module::Build->new(
         'NetAddr::IP' => 0,
         'Moose'       => 0,
         'Readonly'    => 0,
+        'IPC::Run3'   => 0,
         'version'     => 0.74,
     },
     build_requires => {

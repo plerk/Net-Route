@@ -1,44 +1,42 @@
 package Net::Route::Parser::linux;
-use version; our ( $VERSION ) = '$Revision: 218 $' =~ m{(\d+)};    ## no critic
+use strict;
+use warnings;
+use version; our ( $VERSION ) = '$Revision: 272 $' =~ m{(\d+)}xms;
 use Moose;
 use Net::Route;
-
 
 extends 'Net::Route::Parser';
 
 sub command_line
 {
-    return '/sbin/route -n |';
+    return [qw(/sbin/route -n )];
 }
 
 sub parse_routes
 {
-    my ( $self, $input_ref ) = @_;
+    my ( $self, $text_lines_ref ) = @_;
 
-    for ( 1 .. 2 )
-    {
-        readline $input_ref; ## no critic
-    }
+    splice @{$text_lines_ref}, 0, 2;
 
     my @routes;
-    while ( my $line = readline $input_ref )
+    foreach my $line ( @{$text_lines_ref} )
     {
         chomp $line;
 
-        my @values = split /\s+/xms, $line ;
+        my @values = split /\s+/xms, $line;
 
         # These values will be stored in a configuration hash
-        my ( $dest, $dest_mask, $gateway, $flags, $metric, $interface ) = @values[ 0, 2, 1, 3, 4, 7 ];## no critic ( Perl::Critic::Policy::ValuesAndExpressions::ProhibitMagicNumbers )
+        my ( $dest, $gateway, $dest_mask, $flags, $metric, $ref, $use, $interface ) = @values;
 
-        my $is_active      = $flags =~ /U/xms;
+        my $is_active  = $flags =~ /U/xms;
         my $is_dynamic = $flags =~ /[RDM]/xms;
         my $route_ref = Net::Route->new( {
-                'destination' => NetAddr::IP->new( $dest, $dest_mask ),
-                'gateway'     => NetAddr::IP->new( $gateway ),
-                'is_active'   => $is_active,
-                'is_dynamic'  => $is_dynamic,
-                'metric'      => $metric,
-                'interface'   => $interface,
+               'destination' => NetAddr::IP->new( $dest, $dest_mask ),
+               'gateway'     => NetAddr::IP->new( $gateway ),
+               'is_active'   => $is_active,
+               'is_dynamic'  => $is_dynamic,
+               'metric'      => $metric,
+               'interface'   => $interface,
 
             } );
         push @routes, $route_ref;
@@ -65,7 +63,7 @@ Internal.
 
 =head1 VERSION
 
-Revision $Revision: 218 $.
+Revision $Revision: 272 $.
 
 
 =head1 DESCRIPTION

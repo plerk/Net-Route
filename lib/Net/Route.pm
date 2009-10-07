@@ -1,7 +1,7 @@
 package Net::Route;
 
 use Moose;
-use version; our $VERSION = qv('v0.00_02');
+use version; our $VERSION = qv( 'v0.00_03' );
 
 use NetAddr::IP;
 
@@ -32,7 +32,7 @@ Net::Route - Portable interface to the routing table
 
 =head1 VERSION
 
-Version 0.00_02, $Revision: 239 $
+Version 0.00_02, $Revision: 256 $
 
 
 =head1 DESCRIPTION
@@ -50,6 +50,7 @@ interface.
 =head2 The Net::Route Class
 
 L<Net::Route> objects represent single entries from a L<Net::Route::Table>.
+
 
 =head1 INTERFACE
 
@@ -70,6 +71,23 @@ user perspective).
 =head3 is_active()
 
 =head3 is_dynamic()
+
+
+=head1 INSTALLING DEPENDENCIES ON SUN SOLARIS SYSTEMS WITH GCC
+
+The perl interpreter shipped with Solaris was compiled with Sun's proprietary C
+compiler, and therefore attempts to compile XS modules with the same tool and
+options. However, Solaris comes by default with the GNU C Compiler (C<gcc>)
+only, which has its own set of incompatible command-line arguments. Mixing
+these two to compile C<XS> Perl modules doesn't work.
+
+Therefore, when you need to install CPAN modules (such as L<Net::Route>'s
+dependencies) which make use of C<XS> (C code) on a system without the Sun C
+Compiler, you have to use the wrapper script provided by Sun which will invoke
+C<gcc> correctly (replace C<Module> as needed):
+
+  /usr/perl5/bin/perlgcc -MCPAN -e 'install Module'.
+
 
 =head1 BUGS
 

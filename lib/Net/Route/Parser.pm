@@ -3,36 +3,53 @@ package Net::Route::Parser;
 use Moose;
 use English qw( -no_match_vars );
 use POSIX qw( WIFEXITED WEXITSTATUS WIFSIGNALED WTERMSIG WIFSTOPPED WSTOPSIG );
-use version; our ( $VERSION ) = '$Revision: 237 $' =~ m{(\d+)};    ## no critic
+use Readonly;
+use Exporter qw( import );
+use version; our ( $VERSION ) = '$Revision: 275 $' =~ m{(\d+)}xms;
+use IPC::Run3;
 
+# Very loose matching, it's just meant to filter lines
+Readonly our $IPV4_RE  => qr/ (?: \d+ \.){3} \d+ /xms;
+Readonly our $IPV6_RE  => qr/ (?: \p{IsXDigit}+ : :? )+ \p{IsXDigit}+ /xms;
+Readonly our $IP_RE    => qr/ (?: $IPV4_RE | $IPV6_RE ) /xms;
+Readonly our $ROUTE_RE => qr/^ \s* ($IP_RE) \s+ ($IP_RE) \s+ ($IP_RE) \s+ ($IP_RE) \s+ (\d+) \s* $ /xms;
+
+our %EXPORT_TAGS = ( ip_re    => [qw($IPV4_RE $IPV6_RE $IP_RE)],
+                     route_re => [qw($ROUTE_RE)], );
+
+our @EXPORT_OK = ( @{ $EXPORT_TAGS{'ip_re'} }, @{ $EXPORT_TAGS{'route_re'} }, );
 
 sub from_system
 {
     my ( $self ) = @_;
 
-    my $command = $self->command_line();
-    open my $input_ref , "$command" or die "Cannot open or execute '$command': $OS_ERROR"; ## no critic
+    my $command_ref = $self->command_line();
+    my $human_command = ref $command_ref ? ( join q{ }, @{$command_ref} ) : $command_ref;
 
-    my $routes_ref = $self->parse_routes( $input_ref );
-
-    if ( !close $input_ref )
+    my @routes_as_text;
+    if ( !eval { IPC::Run3::run3( $command_ref, undef, \@routes_as_text ); 1 } )
     {
-        if ( !$OS_ERROR && $CHILD_ERROR )
+        die "Cannot execute '$human_command': $EVAL_ERROR";
+    }
+
+    if ( $CHILD_ERROR )
+    {
+        if ( $OSNAME eq 'MSWin32' )
         {
-            if ( WIFSIGNALED($CHILD_ERROR) )
-            {
-                die "'$command' died with signal WTERMSIG($CHILD_ERROR)"; ## no critic
-            }
-            elsif (WEXITSTATUS($CHILD_ERROR) )
-            {
-                die "'$command' returned non-zero value WEXITSTATUS($CHILD_ERROR)"; ## no critic
-            }
+            die "'$human_command' returned non-zero value $CHILD_ERROR";
         }
-        else
+        elsif ( WIFSIGNALED( $CHILD_ERROR ) )
         {
-            # Ignore, it doesn't invalidate the results
+            die "'$human_command' died with signal ", WTERMSIG( $CHILD_ERROR );
+        }
+        elsif ( WEXITSTATUS( $CHILD_ERROR ) )
+        {
+            die "'$human_command' returned non-zero value ", WEXITSTATUS( $CHILD_ERROR );
         }
     }
+
+    chomp @routes_as_text;
+    my $routes_ref = $self->parse_routes( \@routes_as_text );
 
     return $routes_ref;
 }
@@ -55,7 +72,7 @@ Not used directly.
 
 =head1 VERSION
 
-Revision $Revision: 237 $.
+Revision $Revision: 275 $.
 
 
 =head1 DESCRIPTION
@@ -80,13 +97,23 @@ Implementation of C<Net::Route::Table::from_system()>.
 
 =head3 command_line() [pure virtual]
 
-What you want to read the information from, in L<open> format. Ie, if you want
-to open a program end it with a C<|>, if you want to open a file use the usual
-C<< < >>.
+What you want to read the information from, as either:
+
+=over
+
+=item *
+
+a string - it will undergo shell expansion
+
+=item *
+
+an arrayref - the command and its arguments, without shell expansion
+
+=back
 
 Implement this in subclasses.
 
-=head3 parse_routes( $input_ref ) [pure virtual]
+=head3 parse_routes( $text_lines_ref ) [pure virtual]
 
 Reads and parses the routes from the output of the command, returns an arrayref
 of L<Net::Route> objects.

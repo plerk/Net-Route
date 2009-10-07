@@ -1,43 +1,39 @@
 package Net::Route::Parser::MSWin32;
-use version; our ( $VERSION ) = '$Revision: 218 $' =~ m{(\d+)};    ## no critic
+use strict;
+use warnings;
+use version; our ( $VERSION ) = '$Revision: 275 $' =~ m{(\d+)}xms;
 use Moose;
 use Readonly;
 use Net::Route;
-
+use Net::Route::Parser qw(:ip_re :route_re);
 
 extends 'Net::Route::Parser';
 
-# Very loose matching, it's just meant to filter lines
-Readonly my $IPV4_RE  => qr/ (?: \d+ \.){3} \d+ /xms;
-Readonly my $IPV6_RE  => qr/ (?: \p{IsXDigit}+ : :? )+ \p{IsXDigit}+ /xms;
-Readonly my $IP_RE    => qr/ (?: $IPV4_RE | $IPV6_RE ) /xms;
-Readonly my $ROUTE_RE => qr/^ \s* ($IP_RE) \s+ ($IP_RE) \s+ ($IP_RE) \s+ ($IP_RE) \s+ (\d+) \s* $/xms;
-
 sub command_line
 {
-    return 'route print |';
+    return [qw(c:\WINDOWS\system32\route print)];
 }
 
 sub parse_routes
 {
-    my ( $self, $input_ref ) = @_;
+    my ( $self, $text_lines_ref ) = @_;
 
     my @routes;
-    while (  my $line = readline $input_ref  )
+    foreach my $line ( @{$text_lines_ref} )
     {
         chomp $line;
-    
+
         if ( my @values = ( $line =~ $ROUTE_RE ) )
         {
-            my ( $dest, $dest_mask, $gateway, $interface, $metric) = @values;
+            my ( $dest, $dest_mask, $gateway, $interface, $metric ) = @values;
 
             my $route_ref = Net::Route->new( {
-                    'destination' => NetAddr::IP->new( $dest, $dest_mask ),
-                    'gateway'     => NetAddr::IP->new( $gateway ),
-                    'is_active'   => 1, # TODO
-                    'is_dynamic'  => 0, # TODO
-                    'metric'      => $metric,
-                    'interface'   => $interface,
+                   'destination' => NetAddr::IP->new( $dest, $dest_mask ),
+                   'gateway'     => NetAddr::IP->new( $gateway ),
+                   'is_active'   => 1,                       # TODO
+                   'is_dynamic' => 0,            # TODO
+                   'metric'     => $metric,
+                   'interface'  => $interface,
 
                 } );
             push @routes, $route_ref;
@@ -65,7 +61,7 @@ Internal.
 
 =head1 VERSION
 
-Revision $Revision: 218 $.
+Revision $Revision: 275 $.
 
 
 =head1 DESCRIPTION
