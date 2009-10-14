@@ -1,7 +1,8 @@
 package Net::Route::Parser::linux;
+use 5.008;
 use strict;
 use warnings;
-use version; our ( $VERSION ) = '$Revision: 272 $' =~ m{(\d+)}xms;
+use version; our ( $VERSION ) = '$Revision: 297 $' =~ m{(\d+)}xms;
 use Moose;
 use Net::Route;
 
@@ -63,7 +64,7 @@ Internal.
 
 =head1 VERSION
 
-Revision $Revision: 272 $.
+Revision $Revision: 297 $.
 
 
 =head1 DESCRIPTION

@@ -1,7 +1,8 @@
 package Net::Route;
 
+use 5.008;
 use Moose;
-use version; our $VERSION = qv( 'v0.00_04' );
+use version; our $VERSION = qv( 'v0.00_05' );
 
 use NetAddr::IP;
 
@@ -32,7 +33,7 @@ Net::Route - Portable interface to the routing table
 
 =head1 VERSION
 
-Version 0.00_02, $Revision: 285 $
+Version 0.00_02, $Revision: 300 $
 
 
 =head1 DESCRIPTION

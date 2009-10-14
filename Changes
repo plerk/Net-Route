@@ -1,5 +1,11 @@
 Revision history for Net-Route
 
+0.00_05 2009-10-14
+        - Added diag output for unparsable system routes on some CPAN testers'
+          systems (we can't reproduce the issue here)
+        - Added Perl version requirement on each source file for Perl::Critic
+          correctness
+
 0.00_04 2009-10-08
         Updated MANIFEST (oops.)
 

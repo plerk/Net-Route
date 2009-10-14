@@ -1,11 +1,12 @@
 package Net::Route::Parser;
 
+use 5.008;
 use Moose;
 use English qw( -no_match_vars );
 use POSIX qw( WIFEXITED WEXITSTATUS WIFSIGNALED WTERMSIG WIFSTOPPED WSTOPSIG );
 use Readonly;
 use Exporter qw( import );
-use version; our ( $VERSION ) = '$Revision: 275 $' =~ m{(\d+)}xms;
+use version; our ( $VERSION ) = '$Revision: 291 $' =~ m{(\d+)}xms;
 use IPC::Run3;
 
 # Very loose matching, it's just meant to filter lines
@@ -72,7 +73,7 @@ Not used directly.
 
 =head1 VERSION
 
-Revision $Revision: 275 $.
+Revision $Revision: 291 $.
 
 
 =head1 DESCRIPTION
