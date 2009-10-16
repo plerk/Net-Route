@@ -1,3 +1,5 @@
+use strict;
+use warnings;
 use lib 't/lib';
 use Net::Route::Parser::Test;
 use Net::Route::Table;
@@ -6,7 +8,7 @@ use Test::More tests => 3;
 use English qw( -no_match_vars );
 
 my $parser_ref = Net::Route::Parser::Test->new();
-$command = $parser_ref->command_line( '/does/not/exist' );
+my $command = $parser_ref->command_line( '/does/not/exist' );
 
 my $message;
 if ( $OSNAME eq 'MSWin32' )

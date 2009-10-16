@@ -2,7 +2,7 @@ package Net::Route::Parser::solaris;
 use 5.008;
 use strict;
 use warnings;
-use version; our ( $VERSION ) = '$Revision: 297 $' =~ m{(\d+)}xms;
+use version; our ( $VERSION ) = '$Revision: 305 $' =~ m{(\d+)}xms;
 use Moose;
 use Net::Route;
 use Net::Route::Parser qw(:ip_re);
@@ -12,7 +12,7 @@ extends 'Net::Route::Parser';
 
 sub command_line
 {
-    return '/bin/netstat -rnv';
+    return [qw( /bin/netstat -rnv )];
 }
 
 sub parse_routes
@@ -89,7 +89,7 @@ Internal.
 
 =head1 VERSION
 
-Revision $Revision: 297 $.
+Revision $Revision: 305 $.
 
 
 =head1 DESCRIPTION

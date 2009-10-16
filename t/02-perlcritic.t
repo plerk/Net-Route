@@ -1,5 +1,7 @@
 #!perl
 
+use strict;
+use warnings;
 use Test::More;
 if (!eval { require Test::Perl::Critic } )
 {
