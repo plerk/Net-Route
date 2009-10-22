@@ -6,14 +6,19 @@ use English qw( -no_match_vars );
 use POSIX qw( WIFEXITED WEXITSTATUS WIFSIGNALED WTERMSIG WIFSTOPPED WSTOPSIG );
 use Readonly;
 use Exporter qw( import );
-use version; our ( $VERSION ) = '$Revision: 291 $' =~ m{(\d+)}xms;
+use version; our ( $VERSION ) = '$Revision: 315 $' =~ m{(\d+)}xms;
 use IPC::Run3;
 
+# /m is broken in <5.10
+## no critic (RegularExpressions::RequireLineBoundaryMatching)
+
 # Very loose matching, it's just meant to filter lines
-Readonly our $IPV4_RE  => qr/ (?: \d+ \.){3} \d+ /xms;
-Readonly our $IPV6_RE  => qr/ (?: \p{IsXDigit}+ : :? )+ \p{IsXDigit}+ /xms;
-Readonly our $IP_RE    => qr/ (?: $IPV4_RE | $IPV6_RE ) /xms;
-Readonly our $ROUTE_RE => qr/^ \s* ($IP_RE) \s+ ($IP_RE) \s+ ($IP_RE) \s+ ($IP_RE) \s+ (\d+) \s* $ /xms;
+Readonly our $IPV4_RE  => qr/ (?: \d+ \.){3} \d+ /xs;
+Readonly our $IPV6_RE  => qr/ (?: \p{IsXDigit}+ : :? )+ \p{IsXDigit}+ /xs;
+Readonly our $IP_RE    => qr/ (?: $IPV4_RE | $IPV6_RE ) /xs;
+Readonly our $ROUTE_RE => qr/^ \s* ($IP_RE) \s+ ($IP_RE) \s+ ($IP_RE) \s+ ($IP_RE) \s+ (\d+) \s* $ /xs;
+
+## use critic
 
 our %EXPORT_TAGS = ( ip_re    => [qw($IPV4_RE $IPV6_RE $IP_RE)],
                      route_re => [qw($ROUTE_RE)], );
@@ -73,7 +78,7 @@ Not used directly.
 
 =head1 VERSION
 
-Revision $Revision: 291 $.
+Revision $Revision: 315 $.
 
 
 =head1 DESCRIPTION

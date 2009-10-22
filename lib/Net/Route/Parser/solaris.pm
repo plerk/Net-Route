@@ -2,13 +2,38 @@ package Net::Route::Parser::solaris;
 use 5.008;
 use strict;
 use warnings;
-use version; our ( $VERSION ) = '$Revision: 305 $' =~ m{(\d+)}xms;
+use version; our ( $VERSION ) = '$Revision: 315 $' =~ m{(\d+)}xms;
 use Moose;
 use Net::Route;
 use Net::Route::Parser qw(:ip_re);
 use Readonly;
 
 extends 'Net::Route::Parser';
+
+# /m is broken in <5.10
+## no critic (RegularExpressions::RequireLineBoundaryMatching)
+Readonly my $netstat_ipv4_line_re => qr{
+    ($IPV4_RE | default) \s+ # destination
+    ($IPV4_RE) \s+           # mask
+    ($IPV4_RE) \s+           # gateway
+    (?: (\w+) \s+ )?         # interface   
+    (\d+\*?) \s+             # mxfrg
+    (\d+) \s+                # rtt
+    (\d+) \s+                # metric
+    ([A-Z]+) \s+             # flags
+    (\d+) \s+                # out
+    (\d+)}xs;    # in_fwd
+
+Readonly my $netstat_ipv6_line_re => qr{
+    ($IPV6_RE | default) \s+ # destination
+    ($IPV6_RE) \s+           # gateway
+    (?: (\w+) \s+ )?         # interface   
+    (\d+) \s+                # rtt
+    (\d+) \s+                # metric
+    ([A-Z]+) \s+             # flags
+    (\d+) \s+                # out
+    (\d+)}xs;    # in_fwd
+## use critic
 
 sub command_line
 {
@@ -18,8 +43,8 @@ sub command_line
 sub parse_routes
 {
     my ( $self, $text_lines_ref ) = @_;
-
     my @routes;
+    my ( $dest, $mask, $gateway, $interface, $mxfrg, $rtt, $metric, $flags, $out, $in_fwd );
     foreach my $line ( @{$text_lines_ref} )
     {
         if ( $line =~ $IP_RE )
@@ -29,9 +54,9 @@ sub parse_routes
             my @values = split /\s+/xms, $line;
 
             # These values will be stored in a configuration hash
-            if ( $line =~ $IPV6_RE )
+            if ( ( $dest, $gateway, $interface, $rtt, $metric, $flags, $out, $in_fwd )
+                 = ( $line =~ $netstat_ipv6_line_re ) )
             {
-                my ( $dest, $gateway, $interface, $pmtu, $rtt, $metric, $flags, $out, $in_fwd ) = @values;
                 my $is_active  = $flags =~ /U/xms;
                 my $is_dynamic = $flags =~ /[RDM]/xms;
                 my $route_ref = Net::Route->new( { 'destination' => NetAddr::IP->new( $dest ),
@@ -43,15 +68,9 @@ sub parse_routes
                                                  } );
                 push @routes, $route_ref;
             }
-            else
+            elsif ( ( $dest, $mask, $gateway, $interface, $mxfrg, $rtt, $metric, $flags, $out, $in_fwd )
+                    = ( $line =~ $netstat_ipv4_line_re ) )
             {
-                my ( $dest, $mask, $gateway, $interface, $mxfrg, $rtt, $metric, $flags, $out, $in_fwd ) = @values;
-
-                if ( $dest eq 'default' )
-                {
-                    $dest = '0.0.0.0';
-                }
-
                 my $is_active  = $flags =~ /U/xms;
                 my $is_dynamic = $flags =~ /[RDM]/xms;
                 my $route_ref = Net::Route->new( {
@@ -89,7 +108,7 @@ Internal.
 
 =head1 VERSION
 
-Revision $Revision: 305 $.
+Revision $Revision: 315 $.
 
 
 =head1 DESCRIPTION

@@ -1,5 +1,8 @@
 Revision history for Net-Route
 
+0.00_07 2009-10-22
+        Solaris and regex fixes according to CPAN testers reports.
+
 0.00_06 2009-10-16
         Fixed some tests, added Perl version requirements to keep
         Perl::Critic::Pulp happy.
