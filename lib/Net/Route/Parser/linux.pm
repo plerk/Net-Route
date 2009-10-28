@@ -2,7 +2,7 @@ package Net::Route::Parser::linux;
 use 5.008;
 use strict;
 use warnings;
-use version; our ( $VERSION ) = '$Revision: 297 $' =~ m{(\d+)}xms;
+use version; our ( $VERSION ) = '$Revision: 320 $' =~ m{(\d+)}xms;
 use Moose;
 use Net::Route;
 
@@ -32,8 +32,8 @@ sub parse_routes
         my $is_active  = $flags =~ /U/xms;
         my $is_dynamic = $flags =~ /[RDM]/xms;
         my $route_ref = Net::Route->new( {
-               'destination' => NetAddr::IP->new( $dest, $dest_mask ),
-               'gateway'     => NetAddr::IP->new( $gateway ),
+               'destination' => $self->create_ip_object( $dest, $dest_mask ),
+               'gateway'     => $self->create_ip_object( $gateway ),
                'is_active'   => $is_active,
                'is_dynamic'  => $is_dynamic,
                'metric'      => $metric,
@@ -64,7 +64,7 @@ Internal.
 
 =head1 VERSION
 
-Revision $Revision: 297 $.
+Revision $Revision: 320 $.
 
 
 =head1 DESCRIPTION

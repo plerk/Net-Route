@@ -15,7 +15,7 @@ lib_sections = NAME | SYNOPSIS | VERSION | DESCRIPTION | AUTHOR | LICENSE AND CO
 
 [Documentation::PodSpelling]
 spell_command = aspell --lang=en list
-stop_words = Straton API Accessors filehandles filehandle ie IPs CLI whitelist Whitelist TODO Equeter perldoc CPAN's AnnoCPAN CPAN Storoz arrayref Linux' BSD's SOLARIS GCC perl Solaris
+stop_words = Straton API Accessors filehandles filehandle ie IPs CLI whitelist Whitelist TODO Equeter perldoc CPAN's AnnoCPAN CPAN Storoz arrayref Linux' BSD's SOLARIS GCC perl Solaris IP
 
 [Variables::ProhibitPackageVars]
 

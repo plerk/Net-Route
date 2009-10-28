@@ -6,7 +6,7 @@ use English qw( -no_match_vars );
 use POSIX qw( WIFEXITED WEXITSTATUS WIFSIGNALED WTERMSIG WIFSTOPPED WSTOPSIG );
 use Readonly;
 use Exporter qw( import );
-use version; our ( $VERSION ) = '$Revision: 315 $' =~ m{(\d+)}xms;
+use version; our ( $VERSION ) = '$Revision: 321 $' =~ m{(\d+)}xms;
 use IPC::Run3;
 
 # /m is broken in <5.10
@@ -24,6 +24,23 @@ our %EXPORT_TAGS = ( ip_re    => [qw($IPV4_RE $IPV6_RE $IP_RE)],
                      route_re => [qw($ROUTE_RE)], );
 
 our @EXPORT_OK = ( @{ $EXPORT_TAGS{'ip_re'} }, @{ $EXPORT_TAGS{'route_re'} }, );
+
+sub create_ip_object
+{
+    my ( $self, $address, $mask ) = @_;
+
+    my $ip_object_ref = NetAddr::IP->new( $address, $mask );
+
+    if ( !defined $ip_object_ref )
+    {
+        $mask = defined $mask ? $mask : q{};
+        die "Cannot create ip object (address: $address, mask: $mask)";
+    }
+    else
+    {
+        return $ip_object_ref;
+    }
+}
 
 sub from_system
 {
@@ -78,7 +95,7 @@ Not used directly.
 
 =head1 VERSION
 
-Revision $Revision: 315 $.
+Revision $Revision: 321 $.
 
 
 =head1 DESCRIPTION
@@ -124,6 +141,10 @@ Implement this in subclasses.
 Reads and parses the routes from the output of the command, returns an arrayref
 of L<Net::Route> objects.
 
+=head3 create_ip_object ( $address, $mask )
+
+Factory of L<NetAddr::IP> objects for centralized error management. Dies if the
+arguments do not constitute a valid IP or network address.
 
 =head1 AUTHOR
 

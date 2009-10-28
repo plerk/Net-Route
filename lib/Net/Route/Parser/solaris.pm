@@ -2,7 +2,7 @@ package Net::Route::Parser::solaris;
 use 5.008;
 use strict;
 use warnings;
-use version; our ( $VERSION ) = '$Revision: 315 $' =~ m{(\d+)}xms;
+use version; our ( $VERSION ) = '$Revision: 321 $' =~ m{(\d+)}xms;
 use Moose;
 use Net::Route;
 use Net::Route::Parser qw(:ip_re);
@@ -16,7 +16,7 @@ Readonly my $netstat_ipv4_line_re => qr{
     ($IPV4_RE | default) \s+ # destination
     ($IPV4_RE) \s+           # mask
     ($IPV4_RE) \s+           # gateway
-    (?: (\w+) \s+ )?         # interface   
+    (?: ( [\w:]+ ) \s+ )?    # interface   
     (\d+\*?) \s+             # mxfrg
     (\d+) \s+                # rtt
     (\d+) \s+                # metric
@@ -47,43 +47,47 @@ sub parse_routes
     my ( $dest, $mask, $gateway, $interface, $mxfrg, $rtt, $metric, $flags, $out, $in_fwd );
     foreach my $line ( @{$text_lines_ref} )
     {
-        if ( $line =~ $IP_RE )
+
+        # These values will be stored in a configuration hash
+        if ( ( $dest, $gateway, $interface, $rtt, $metric, $flags, $out, $in_fwd )
+             = ( $line =~ $netstat_ipv6_line_re ) )
         {
-            chomp $line;
-
-            my @values = split /\s+/xms, $line;
-
-            # These values will be stored in a configuration hash
-            if ( ( $dest, $gateway, $interface, $rtt, $metric, $flags, $out, $in_fwd )
-                 = ( $line =~ $netstat_ipv6_line_re ) )
+            my $is_active  = $flags =~ /U/xms;
+            my $is_dynamic = $flags =~ /[RDM]/xms;
+            my $route_ref = Net::Route->new( { 'destination' => NetAddr::IP->new( $dest ),
+                                               'gateway'     => NetAddr::IP->new( $gateway ),
+                                               'is_active'   => $is_active,
+                                               'is_dynamic'  => $is_dynamic,
+                                               'metric'      => $metric,
+                                               'interface'   => $interface,
+                                             } );
+            push @routes, $route_ref;
+        }
+        elsif ( ( $dest, $mask, $gateway, $interface, $mxfrg, $rtt, $metric, $flags, $out, $in_fwd )
+                = ( $line =~ $netstat_ipv4_line_re ) )
+        {
+            if ( $dest eq 'default' )
             {
-                my $is_active  = $flags =~ /U/xms;
-                my $is_dynamic = $flags =~ /[RDM]/xms;
-                my $route_ref = Net::Route->new( { 'destination' => NetAddr::IP->new( $dest ),
-                                                   'gateway'     => NetAddr::IP->new( $gateway ),
-                                                   'is_active'   => $is_active,
-                                                   'is_dynamic'  => $is_dynamic,
-                                                   'metric'      => $metric,
-                                                   'interface'   => $interface,
-                                                 } );
-                push @routes, $route_ref;
+                $dest = '0.0.0.0';
             }
-            elsif ( ( $dest, $mask, $gateway, $interface, $mxfrg, $rtt, $metric, $flags, $out, $in_fwd )
-                    = ( $line =~ $netstat_ipv4_line_re ) )
-            {
-                my $is_active  = $flags =~ /U/xms;
-                my $is_dynamic = $flags =~ /[RDM]/xms;
-                my $route_ref = Net::Route->new( {
-                       'destination' => NetAddr::IP->new( $dest, $mask ),
-                       'gateway'     => NetAddr::IP->new( $gateway ),
-                       'is_active'   => $is_active,
-                       'is_dynamic'  => $is_dynamic,
-                       'metric'      => $metric,
-                       'interface'   => $interface,
 
-                    } );
-                push @routes, $route_ref;
+            if ( !defined $interface )
+            {
+                $interface = '';
             }
+
+            my $is_active  = $flags =~ /U/xms;
+            my $is_dynamic = $flags =~ /[RDM]/xms;
+            my $route_ref = Net::Route->new( {
+                   'destination' => $self->create_ip_object( $dest, $mask ),
+                   'gateway'     => $self->create_ip_object( $gateway ),
+                   'is_active'   => $is_active,
+                   'is_dynamic'  => $is_dynamic,
+                   'metric'      => $metric,
+                   'interface'   => $interface,
+
+                } );
+            push @routes, $route_ref;
         }
     }
 
@@ -108,7 +112,7 @@ Internal.
 
 =head1 VERSION
 
-Revision $Revision: 315 $.
+Revision $Revision: 321 $.
 
 
 =head1 DESCRIPTION

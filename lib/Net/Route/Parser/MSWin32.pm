@@ -2,7 +2,7 @@ package Net::Route::Parser::MSWin32;
 use 5.008;
 use strict;
 use warnings;
-use version; our ( $VERSION ) = '$Revision: 297 $' =~ m{(\d+)}xms;
+use version; our ( $VERSION ) = '$Revision: 320 $' =~ m{(\d+)}xms;
 use Moose;
 use Readonly;
 use Net::Route;
@@ -29,9 +29,9 @@ sub parse_routes
             my ( $dest, $dest_mask, $gateway, $interface, $metric ) = @values;
 
             my $route_ref = Net::Route->new( {
-                   'destination' => NetAddr::IP->new( $dest, $dest_mask ),
-                   'gateway'     => NetAddr::IP->new( $gateway ),
-                   'is_active'   => 1,                       # TODO
+                   'destination' => $self->create_ip_object( $dest, $mask ),
+                   'gateway'     => $self->create_ip_object( $gateway ),
+                   'is_active'   => 1,                              # TODO
                    'is_dynamic' => 0,            # TODO
                    'metric'     => $metric,
                    'interface'  => $interface,
@@ -62,7 +62,7 @@ Internal.
 
 =head1 VERSION
 
-Revision $Revision: 297 $.
+Revision $Revision: 320 $.
 
 
 =head1 DESCRIPTION
