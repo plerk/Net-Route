@@ -2,26 +2,30 @@ use strict;
 use warnings;
 use Module::Build;
 
-die "OS $^O not supported" unless -e "lib/Net/Route/Parser/$^O.pm";
-
 my $builder = Module::Build->new(
     module_name         => 'Net::Route',
     license             => 'perl',
     dist_author         => 'Straton IT <tequeter@straton-it.fr>',
     dist_version_from   => 'lib/Net/Route.pm',
+    # Includes indirect deps to make CPAN testing reports more useful
     requires => {
-        'NetAddr::IP' => 0,
-        'Moose'       => 0,
-        'Readonly'    => 0,
-        'IPC::Run3'   => 0,
-        'version'     => 0.74,
-        'perl'        => '5.8.0',
+        'perl'                     => '5.8.0',
+        'version'                  => 0.74,
+        'NetAddr::IP'              => 0,
+        'Readonly'                 => 0,
+        'IPC::Run3'                => 0,
+        # Moose and its dependencies
+        'Moose'                    => 0,
+        'Class::MOP'               => 0,
+        'Devel::GlobalDestruction' => 0,
+        'Sub::Exporter'            => 0,
+        'Class::C3'                => 0,
     },
     build_requires => {
-        'Test::More'          => 0,
+        'Test::More'               => 0,
     },
     add_to_cleanup     => [ 'Net-Route-*' ],
-    create_makefile_pl => 'passthrough',
+    create_makefile_pl => 'traditional',
 );
 
 $builder->create_build_script();

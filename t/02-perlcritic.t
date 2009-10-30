@@ -3,11 +3,15 @@
 use strict;
 use warnings;
 use Test::More;
+
 if (!eval { require Test::Perl::Critic } )
 {
-    Test::More::plan(
-        skip_all => "Test::Perl::Critic required for testing PBP compliance"
-    );
+    plan( skip_all => "Test::Perl::Critic required for testing PBP compliance" );
+}
+
+if ( !$ENV{'AUTHOR_TEST'} && !$ENV{'AUTHOR_TEST_NET_ROUTE'} )
+{
+    plan( skip_all => 'Test::Perl::Critic only run when AUTHOR_TEST is set' );
 }
 
 Test::Perl::Critic->import(

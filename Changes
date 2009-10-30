@@ -1,5 +1,8 @@
 Revision history for Net-Route
 
+0.00_10 2009-10-30
+        Improved testing behavior for CPANT (thanks Andreas Koenig!)
+
 0.00_09 2009-10-29
         Build process changes (CPANT reports, user-friendliness)
 

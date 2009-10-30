@@ -1,6 +1,6 @@
 ---
 name: Net-Route
-version: v0.00_09
+version: v0.00_10
 author:
   - 'Straton IT <tequeter@straton-it.fr>'
 abstract: Portable interface to the routing table
@@ -8,10 +8,14 @@ license: perl
 resources:
   license: http://dev.perl.org/licenses/
 requires:
+  Class::C3: 0
+  Class::MOP: 0
+  Devel::GlobalDestruction: 0
   IPC::Run3: 0
   Moose: 0
   NetAddr::IP: 0
   Readonly: 0
+  Sub::Exporter: 0
   perl: 5.8.0
   version: 0.74
 build_requires:
@@ -19,7 +23,7 @@ build_requires:
 provides:
   Net::Route:
     file: lib/Net/Route.pm
-    version: v0.00_09
+    version: v0.00_10
   Net::Route::Parser:
     file: lib/Net/Route/Parser.pm
     version: 321
