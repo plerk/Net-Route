@@ -1,20 +1,11 @@
 use strict;
 use warnings;
-use Test::More;
+use Test::More tests => 2;
 use Net::Route::Table;
 use Net::Route::Parser;
 use NetAddr::IP;
 use IPC::Run3;
 use English qw( -no_match_vars );
-
-if ( -e "lib/Net/Route/Parser/$^O.pm" )
-{
-    plan( tests => 2 );
-}
-else
-{
-    plan( skip_all => "No support for OS: $^O" ); # CPAN::Reporter
-}
 
 sub diag_system_command
 {

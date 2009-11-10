@@ -4,17 +4,8 @@ use lib 't/lib';
 use Net::Route::Parser::Test;
 use Net::Route::Table;
 use Test::Exception;
-use Test::More;
+use Test::More tests => 3;
 use English qw( -no_match_vars );
-
-if ( -e "lib/Net/Route/Parser/$^O.pm" )
-{
-    plan( tests => 3 );
-}
-else
-{
-    plan( skip_all => "No support for OS: $^O" ); # CPAN::Reporter
-}
 
 my $parser_ref = Net::Route::Parser::Test->new();
 my $command = $parser_ref->command_line( '/does/not/exist' );
