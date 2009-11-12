@@ -1,6 +1,6 @@
 ---
 name: Net-Route
-version: v0.00_11
+version: v0.01
 author:
   - 'Straton IT <tequeter@straton-it.fr>'
 abstract: Portable interface to the routing table
@@ -23,7 +23,7 @@ build_requires:
 provides:
   Net::Route:
     file: lib/Net/Route.pm
-    version: v0.00_11
+    version: v0.01
   Net::Route::Parser:
     file: lib/Net/Route/Parser.pm
     version: 321

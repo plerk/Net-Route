@@ -2,7 +2,7 @@ package Net::Route;
 
 use 5.008;
 use Moose;
-use version; our $VERSION = qv( 'v0.00_11' );
+use version; our $VERSION = qv( 'v0.01' );
 
 use NetAddr::IP;
 
@@ -33,7 +33,7 @@ Net::Route - Portable interface to the routing table
 
 =head1 VERSION
 
-Version 0.00_11, $Revision: 347 $
+Version 0.01, $Revision: 356 $
 
 
 =head1 DESCRIPTION
@@ -56,7 +56,7 @@ L<Net::Route> objects represent single entries from a L<Net::Route::Table>.
 =head1 INTERFACE
 
 This documents L<Net::Route> as a class. To know how to use the module, refer
-to the L<SYNOPSIS|synopsys> or L<Net::Route::Table> (the entry point from a
+to the L<synopsis|/SYNOPSIS> or L<Net::Route::Table> (the entry point from a
 user perspective).
 
 =head2 Object Methods
@@ -89,6 +89,72 @@ C<gcc> correctly (replace C<Module> as needed):
 
   /usr/perl5/bin/perlgcc -MCPAN -e 'install Module'.
 
+
+=head1 STATUS AND ROADMAP
+
+Please refer to the Changes file for a detailed history.
+
+=head2 0.01 - First Public Release
+
+L<Net::Route> meets our goals for a first public release:
+
+=over
+
+=item *
+
+It can list all routes
+
+=item *
+
+It can get the default route
+
+=item *
+
+It can provide the most common characteristics of routes
+
+=item *
+
+It is portable on Linux, Solaris and Windows
+
+=back
+
+L<Net::Route> is used in other 
+L<Straton IT software|http://en.straton-it.fr/>, such as
+L<Cancerbero 0.7|http://en.straton-it.fr/open-source/cancerbero-07> and
+Confdump/Sys.
+
+=head2 0.xx - Community Releases
+
+These releases will include features and bugfixes suggested, reported and/or
+contributed by the community. For example:
+
+=over
+
+=item *
+
+Differentiating between C<Net::Route>-as-a-class and C<Net::Route>-as-a-module
+
+=item *
+
+Support for more operating systems
+
+=item *
+
+Getting rid of CPAN dependencies that are troublesome to install on some
+platforms.
+
+=item *
+
+L<Your idea|http://rt.cpan.org/NoAuth/Bugs.html?Dist=Net-Route> here...
+
+=back
+
+The API might change somewhat, if necessary.
+
+=head2 1.0 - API Freeze
+
+When appropriate (according to the user reports), we will freeze the interface
+and release version 1.0.
 
 =head1 BUGS
 
