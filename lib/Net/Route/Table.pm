@@ -2,7 +2,7 @@ package Net::Route::Table;
 use 5.008;
 use strict;
 use warnings;
-use version; our ( $VERSION ) = '$Revision: 305 $' =~ m{(\d+)}xms;
+use version; our ( $VERSION ) = '$Revision: 363 $' =~ m{(\d+)}xms;
 use Moose;
 use NetAddr::IP;
 use English qw( -no_match_vars );
@@ -66,7 +66,7 @@ Net::Route::Table - A routing table, such as your system's.
 
 =head1 VERSION 
 
-Revision $Revision: 305 $.
+Revision $Revision: 363 $.
 
 =head1 DESCRIPTION 
 

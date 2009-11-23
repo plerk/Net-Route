@@ -2,7 +2,7 @@ package Net::Route::Parser::solaris;
 use 5.008;
 use strict;
 use warnings;
-use version; our ( $VERSION ) = '$Revision: 321 $' =~ m{(\d+)}xms;
+use version; our ( $VERSION ) = '$Revision: 363 $' =~ m{(\d+)}xms;
 use Moose;
 use Net::Route;
 use Net::Route::Parser qw(:ip_re);
@@ -112,7 +112,7 @@ Internal.
 
 =head1 VERSION
 
-Revision $Revision: 321 $.
+Revision $Revision: 363 $.
 
 
 =head1 DESCRIPTION

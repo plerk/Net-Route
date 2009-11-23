@@ -6,7 +6,7 @@ use English qw( -no_match_vars );
 use POSIX qw( WIFEXITED WEXITSTATUS WIFSIGNALED WTERMSIG WIFSTOPPED WSTOPSIG );
 use Readonly;
 use Exporter qw( import );
-use version; our ( $VERSION ) = '$Revision: 321 $' =~ m{(\d+)}xms;
+use version; our ( $VERSION ) = '$Revision: 363 $' =~ m{(\d+)}xms;
 use IPC::Run3;
 
 # /m is broken in <5.10
@@ -95,7 +95,7 @@ Not used directly.
 
 =head1 VERSION
 
-Revision $Revision: 321 $.
+Revision $Revision: 363 $.
 
 
 =head1 DESCRIPTION

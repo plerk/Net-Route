@@ -2,7 +2,7 @@ package Net::Route;
 
 use 5.008;
 use Moose;
-use version; our $VERSION = qv( 'v0.01' );
+use version; our $VERSION = qv( 'v0.02' );
 
 use NetAddr::IP;
 
@@ -33,7 +33,7 @@ Net::Route - Portable interface to the routing table
 
 =head1 VERSION
 
-Version 0.01, $Revision: 356 $
+Version 0.02, $Revision: 372 $
 
 
 =head1 DESCRIPTION
@@ -119,9 +119,9 @@ It is portable on Linux, Solaris and Windows
 =back
 
 L<Net::Route> is used in other 
-L<Straton IT software|http://en.straton-it.fr/>, such as
-L<Cancerbero 0.7|http://en.straton-it.fr/open-source/cancerbero-07> and
-Confdump/Sys.
+Straton IT (L<http://en.straton-it.fr/>) software, such as
+Cancerbero 0.7 (L<http://en.straton-it.fr/open-source/cancerbero-07>) and
+Confdump/Sys (L<http://confdump.sourceforge.net/>).
 
 =head2 0.xx - Community Releases
 
@@ -145,7 +145,7 @@ platforms.
 
 =item *
 
-L<Your idea|http://rt.cpan.org/NoAuth/Bugs.html?Dist=Net-Route> here...
+Your idea (L<http://rt.cpan.org/NoAuth/Bugs.html?Dist=Net-Route>) here...
 
 =back
 
@@ -155,6 +155,7 @@ The API might change somewhat, if necessary.
 
 When appropriate (according to the user reports), we will freeze the interface
 and release version 1.0.
+
 
 =head1 BUGS
 

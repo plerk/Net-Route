@@ -1,5 +1,10 @@
 Revision history for Net-Route
 
+0.02    2009-11-23
+        - Fixed a typo on MSWin32 that would render the module unusable
+        - Moved secondary dependencies to recommendations
+        - Documentation fixes
+
 0.01    2009-11-12
         Version bump.
 
