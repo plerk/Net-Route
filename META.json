@@ -1,0 +1,83 @@
+{
+   "abstract" : "Portable interface to the routing table",
+   "author" : [
+      "Straton IT <tequeter@straton-it.fr>"
+   ],
+   "dynamic_config" : 1,
+   "generated_by" : "Module::Build version 0.4231",
+   "license" : [
+      "perl_5"
+   ],
+   "meta-spec" : {
+      "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
+      "version" : 2
+   },
+   "name" : "Net-Route",
+   "prereqs" : {
+      "build" : {
+         "requires" : {
+            "Test::More" : "0"
+         }
+      },
+      "configure" : {
+         "requires" : {
+            "Module::Build" : "0.42"
+         }
+      },
+      "runtime" : {
+         "recommends" : {
+            "Class::C3" : "0",
+            "Class::MOP" : "0",
+            "Devel::GlobalDestruction" : "0",
+            "Sub::Exporter" : "0"
+         },
+         "requires" : {
+            "IPC::Run3" : "0",
+            "Moose" : "0",
+            "NetAddr::IP" : "0",
+            "Readonly" : "0",
+            "perl" : "v5.8.0",
+            "version" : "0.74"
+         }
+      },
+      "test" : {
+         "requires" : {
+            "Test::Exception" : "0"
+         }
+      }
+   },
+   "provides" : {
+      "Net::Route" : {
+         "file" : "lib/Net/Route.pm",
+         "version" : "v0.2.0"
+      },
+      "Net::Route::Parser" : {
+         "file" : "lib/Net/Route/Parser.pm",
+         "version" : "363"
+      },
+      "Net::Route::Parser::MSWin32" : {
+         "file" : "lib/Net/Route/Parser/MSWin32.pm",
+         "version" : "366"
+      },
+      "Net::Route::Parser::linux" : {
+         "file" : "lib/Net/Route/Parser/linux.pm",
+         "version" : "363"
+      },
+      "Net::Route::Parser::solaris" : {
+         "file" : "lib/Net/Route/Parser/solaris.pm",
+         "version" : "363"
+      },
+      "Net::Route::Table" : {
+         "file" : "lib/Net/Route/Table.pm",
+         "version" : "363"
+      }
+   },
+   "release_status" : "stable",
+   "resources" : {
+      "license" : [
+         "http://dev.perl.org/licenses/"
+      ]
+   },
+   "version" : "v0.2.0",
+   "x_serialization_backend" : "JSON::PP version 4.02"
+}
