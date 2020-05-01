@@ -27,8 +27,10 @@ my $builder = Module::Build->new(
     build_requires => {
         'Test::More'               => 0,
     },
+    test_requires => {
+        'Test::Exception'          => 0,
+    },
     add_to_cleanup     => [ 'Net-Route-*' ],
-    create_makefile_pl => 'passthrough',
 );
 
 $builder->create_build_script();
