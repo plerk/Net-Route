@@ -3,11 +3,12 @@ Changes
 lib/Net/Route.pm
 lib/Net/Route/Parser.pm
 lib/Net/Route/Parser/linux.pm
+lib/Net/Route/Parser/linux/proc.pm
+lib/Net/Route/Parser/linux/sbinroute.pm
 lib/Net/Route/Parser/MSWin32.pm
 lib/Net/Route/Parser/solaris.pm
 lib/Net/Route/Table.pm
 maint/cip-before-install
-Makefile.PL
 MANIFEST
 META.json
 META.yml
