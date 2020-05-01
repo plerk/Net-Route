@@ -2,5 +2,9 @@
 
 set -ex
 
-cip sudo apt-get update
-cip sudo apt-get install net-tools
+if [ "$TEST_PROC" ]; then
+  echo "testing /proc/net/route mode";
+else
+  cip sudo apt-get update
+  cip sudo apt-get install net-tools
+fi
