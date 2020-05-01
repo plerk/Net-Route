@@ -54,7 +54,7 @@ __END__
 
 =head1 NAME
 
-Net::Route::Parser::linux - Internal class
+Net::Route::Parser::linux::sbinroute - Internal class
 
 
 =head1 SYNOPSIS
